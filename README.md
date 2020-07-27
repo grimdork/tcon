@@ -24,7 +24,7 @@ There is a separate handler for different types of input. These are:
 -   OnCommandFunc: This callback receives a string with the command buffer. The rest is up to the user.
 -   OnRuneFunc: Filter callback to allow special handling while typing. Optionally return 0 to skip symbols.
 -   OnFunc: The generic callback, used with SetTabFunc() and SetEscFunc().
--   OnCtrlFunc: SpecialHandler for control keys.
+-   OnCtrlFunc: Handler for control keys.
 
 NOTE: Remember to set up a key or command to call the Quit() method.
 
@@ -35,3 +35,4 @@ NOTE: Remember to set up a key or command to call the Quit() method.
 -   Coloured status and mode
 -   Command line manipulation in the filter?
 -   Built-in TAB-completion?
+-   Figure out why resizing sometimes messes up things
