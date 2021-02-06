@@ -224,8 +224,6 @@ func (s *Screen) handlePlain(ev *tcell.EventKey) {
 
 		if s.cmdhistorypos > 0 {
 			s.cmdhistorypos--
-		} else {
-			s.cmdhistorypos = len(s.cmdhistory) - 1
 		}
 
 		s.fetchHistory()
@@ -236,11 +234,11 @@ func (s *Screen) handlePlain(ev *tcell.EventKey) {
 		}
 
 		s.cmdhistorypos++
-		if s.cmdhistorypos >= len(s.cmdhistory) {
-			s.cmdhistorypos = 0
+		if s.cmdhistorypos < len(s.cmdhistory) {
+			s.fetchHistory()
+		} else {
+			s.ClearCommand()
 		}
-
-		s.fetchHistory()
 
 	case tcell.KeyLeft:
 		if s.cpos > 0 {
