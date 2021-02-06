@@ -1,4 +1,4 @@
-# tscreen
+# tcon
 
 A simple wrapper for tcell-based text-only interfaces.
 
