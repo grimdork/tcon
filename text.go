@@ -9,7 +9,7 @@ import (
 // Whiteout creates a line of n white blocks at the specified position.
 func (s *Screen) Whiteout(x, y, n int) {
 	s.SetStyle(s.whiteStyle)
-	space := strings.Repeat("*", n)
+	space := strings.Repeat("\u2588", n)
 	s.P(x, y, space)
 	s.Show()
 	s.SetStyle(s.textStyle)
@@ -29,6 +29,7 @@ func (s *Screen) P(x, y int, txt string) {
 func (s *Screen) AddText(txt string) {
 	lines := WordWrap(txt, s.w)
 	if len(lines) > s.tmaxy {
+		s.lines[s.tmaxy-1] = ""
 		s.lines = lines[:s.tmaxy]
 		s.next = lines[s.tmaxy:]
 		return
