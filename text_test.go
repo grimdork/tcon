@@ -1,9 +1,9 @@
-package tscreen_test
+package tcon_test
 
 import (
 	"testing"
 
-	"github.com/grimdork/tscreen"
+	"github.com/grimdork/tcon"
 )
 
 var (
@@ -13,19 +13,19 @@ var (
 
 func TestWordWrap(t *testing.T) {
 	t.Logf("Splitting text string of %d characters into 80-character lines.", len(text))
-	lines := tscreen.WordWrap(text, 80)
+	lines := tcon.WordWrap(text, 80)
 	for _, l := range lines {
 		t.Logf("%s", l)
 	}
 
 	t.Logf("Splitting text string of %d characters into 10-character lines.", len(text))
-	lines = tscreen.WordWrap(text, 10)
+	lines = tcon.WordWrap(text, 10)
 	for _, l := range lines {
 		t.Logf("%s", l)
 	}
 
 	t.Logf("Splitting spacing- and punctuation-less text string of %d characters into 80-character lines.", len(annoyingtext))
-	lines = tscreen.WordWrap(annoyingtext, 80)
+	lines = tcon.WordWrap(annoyingtext, 80)
 	for _, l := range lines {
 		t.Logf("%s", l)
 	}

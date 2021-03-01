@@ -1,4 +1,4 @@
-package tscreen
+package tcon
 
 // PC prints the command buffer.
 func (s *Screen) PC() {

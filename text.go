@@ -1,4 +1,4 @@
-package tscreen
+package tcon
 
 import (
 	"strings"

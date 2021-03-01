@@ -6,12 +6,12 @@ import (
 	"runtime"
 
 	"github.com/gdamore/tcell"
-	"github.com/grimdork/tscreen"
+	"github.com/grimdork/tcon"
 )
 
 func main() {
 	var err error
-	s, err := tscreen.New()
+	s, err := tcon.New()
 	s.SetTitle("Demo app")
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %s\n", err.Error())
