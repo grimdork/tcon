@@ -33,6 +33,7 @@ type Screen struct {
 	cpos          int
 	cmdhistory    []string
 	cmdhistorypos int
+	insertMode    bool
 
 	// callbacks
 	OnRune    OnRuneFunc
@@ -46,7 +47,10 @@ type Screen struct {
 
 // New returns a pointer to a Screen structure which wraps some tcell functionality.
 func New() (*Screen, error) {
-	s := &Screen{q: make(chan bool)}
+	s := &Screen{
+		insertMode: true,
+		q:          make(chan bool),
+	}
 	scr, err := tcell.NewScreen()
 	if err != nil {
 		return nil, err
@@ -185,19 +189,20 @@ func (s *Screen) handlePlain(ev *tcell.EventKey) {
 			for x := s.cpos; x < len(s.cbuf); x++ {
 				tmp = append(tmp, s.cbuf[x])
 			}
-			s.Printf("Keeping '%s'", string(tmp))
 			s.PL()
 			s.cbuf[s.cpos] = r
 			s.cpos++
-			save := s.cpos
-			for _, c := range tmp {
-				if c == 0 || x >= len(s.cbuf) {
-					break
+			if s.insertMode {
+				save := s.cpos
+				for _, c := range tmp {
+					if c == 0 || x >= len(s.cbuf) {
+						break
+					}
+					s.cbuf[s.cpos] = c
+					s.cpos++
 				}
-				s.cbuf[s.cpos] = c
-				s.cpos++
+				s.cpos = save
 			}
-			s.cpos = save
 			s.PC()
 		}
 
