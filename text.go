@@ -26,7 +26,7 @@ func (s *Screen) P(x, y int, txt string) {
 }
 
 // Printf prints a formatted string to the output buffer.
-func (s *Screen) Priintf(format string, args ...interface{}) {
+func (s *Screen) Printf(format string, args ...interface{}) {
 	s.AddText(fmt.Sprintf(format, args...))
 	s.PL()
 }
