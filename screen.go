@@ -180,8 +180,24 @@ func (s *Screen) handlePlain(ev *tcell.EventKey) {
 		}
 
 		if s.cpos < len(s.cbuf) {
+			tmp := []rune{}
+			x := s.cpos
+			for x := s.cpos; x < len(s.cbuf); x++ {
+				tmp = append(tmp, s.cbuf[x])
+			}
+			s.Printf("Keeping '%s'", string(tmp))
+			s.PL()
 			s.cbuf[s.cpos] = r
 			s.cpos++
+			save := s.cpos
+			for _, c := range tmp {
+				if c == 0 || x >= len(s.cbuf) {
+					break
+				}
+				s.cbuf[s.cpos] = c
+				s.cpos++
+			}
+			s.cpos = save
 			s.PC()
 		}
 
