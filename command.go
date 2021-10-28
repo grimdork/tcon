@@ -50,3 +50,7 @@ func (s *Screen) fetchHistory() {
 	}
 	s.PC()
 }
+
+// GetCommand returns the current string in the command buffer.
+func (s *Screen) GetCommand() {
+}

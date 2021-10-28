@@ -1,6 +1,7 @@
 package tcon
 
 import (
+	"strings"
 	"sync"
 
 	"github.com/gdamore/tcell"
@@ -34,6 +35,7 @@ type Screen struct {
 	cmdhistory    []string
 	cmdhistorypos int
 	insertMode    bool
+	command       strings.Builder
 
 	// callbacks
 	OnRune    OnRuneFunc
@@ -204,6 +206,7 @@ func (s *Screen) handlePlain(ev *tcell.EventKey) {
 				s.cpos = save
 			}
 			s.PC()
+			s.rewriteBuffer()
 		}
 
 	case tcell.KeyBackspace2:
@@ -218,6 +221,7 @@ func (s *Screen) handlePlain(ev *tcell.EventKey) {
 				}
 			}
 			s.PC()
+			s.rewriteBuffer()
 		}
 
 	case tcell.KeyDelete:
@@ -226,6 +230,7 @@ func (s *Screen) handlePlain(ev *tcell.EventKey) {
 			s.cbuf = append(s.cbuf, 0)
 		}
 		s.PC()
+		s.rewriteBuffer()
 
 	case tcell.KeyEnter:
 		if s.cbuf[0] == 0 {
@@ -237,6 +242,7 @@ func (s *Screen) handlePlain(ev *tcell.EventKey) {
 			s.OnCommand(string(s.cbuf))
 		}
 		s.ClearCommand()
+		s.command.Reset()
 
 	case tcell.KeyUp:
 		if len(s.cmdhistory) == 0 || s.cmdhistorypos == 0 {
@@ -247,6 +253,7 @@ func (s *Screen) handlePlain(ev *tcell.EventKey) {
 			s.cmdhistorypos--
 			s.fetchHistory()
 		}
+		s.rewriteBuffer()
 
 	case tcell.KeyDown:
 		if len(s.cmdhistory) == 0 {
@@ -260,6 +267,7 @@ func (s *Screen) handlePlain(ev *tcell.EventKey) {
 			s.cmdhistorypos++
 			s.ClearCommand()
 		}
+		s.rewriteBuffer()
 
 	case tcell.KeyLeft:
 		if s.cpos > 0 {
@@ -321,4 +329,15 @@ func (s *Screen) UpdateStatus() {
 // SetInsertMode sets overwrite (false) or insert (true) modes.
 func (s *Screen) SetInsertMode(t bool) {
 	s.insertMode = t
+}
+
+func (s *Screen) rewriteBuffer() {
+	s.command.Reset()
+	for _, r := range s.cbuf {
+		if r != 0 {
+			s.command.WriteRune(r)
+		} else {
+			return
+		}
+	}
 }
