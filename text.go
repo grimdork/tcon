@@ -1,6 +1,7 @@
 package tcon
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/gdamore/tcell"
@@ -22,6 +23,12 @@ func (s *Screen) P(x, y int, txt string) {
 		x++
 	}
 	s.Show()
+}
+
+// Printf prints a formatted string to the output buffer.
+func (s *Screen) Priintf(format string, args ...interface{}) {
+	s.AddText(fmt.Sprintf(format, args...))
+	s.PL()
 }
 
 // AddText adds text to the output buffer, splitting it if needed.

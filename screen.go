@@ -218,25 +218,25 @@ func (s *Screen) handlePlain(ev *tcell.EventKey) {
 		s.ClearCommand()
 
 	case tcell.KeyUp:
-		if len(s.cmdhistory) == 0 {
+		if len(s.cmdhistory) == 0 || s.cmdhistorypos == 0 {
 			break
 		}
 
 		if s.cmdhistorypos > 0 {
 			s.cmdhistorypos--
+			s.fetchHistory()
 		}
-
-		s.fetchHistory()
 
 	case tcell.KeyDown:
 		if len(s.cmdhistory) == 0 {
 			break
 		}
 
-		s.cmdhistorypos++
-		if s.cmdhistorypos < len(s.cmdhistory) {
+		if s.cmdhistorypos < len(s.cmdhistory)-1 {
+			s.cmdhistorypos++
 			s.fetchHistory()
 		} else {
+			s.cmdhistorypos++
 			s.ClearCommand()
 		}
 

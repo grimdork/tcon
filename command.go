@@ -36,6 +36,9 @@ func (s *Screen) AddHistory(cmd string) {
 // fetchHistory sets the current command to the current history point.
 func (s *Screen) fetchHistory() {
 	s.cpos = 0
+	if s.cmdhistorypos >= len(s.cmdhistory) {
+		s.cmdhistorypos = len(s.cmdhistory) - 1
+	}
 	for i, r := range s.cmdhistory[s.cmdhistorypos] {
 		if i >= len(s.cbuf) {
 			break
