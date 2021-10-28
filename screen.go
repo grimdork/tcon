@@ -317,3 +317,8 @@ func (s *Screen) UpdateStatus() {
 	s.Show()
 	s.SetStyle(s.textStyle)
 }
+
+// SetInsertMode sets overwrite (false) or insert (true) modes.
+func (s *Screen) SetInsertMode(t bool) {
+	s.insertMode = t
+}
