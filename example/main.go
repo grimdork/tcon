@@ -12,12 +12,12 @@ import (
 func main() {
 	var err error
 	s, err := tcon.New()
-	s.SetTitle("Demo app")
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %s\n", err.Error())
 		os.Exit(2)
 	}
 
+	s.SetTitle("Demo app")
 	s.SetCtrlFunc(func(k tcell.Key) {
 		switch k {
 		case tcell.KeyCtrlL:
