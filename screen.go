@@ -245,6 +245,13 @@ func (s *Screen) handlePlain(ev *tcell.EventKey) {
 			s.cpos--
 		}
 
+	case tcell.KeyRight:
+		if s.cpos < len(s.cbuf) {
+			s.cpos++
+			if s.cbuf[s.cpos] == 0 && s.cbuf[s.cpos-1] == 0 {
+				s.cpos--
+			}
+		}
 	}
 }
 
