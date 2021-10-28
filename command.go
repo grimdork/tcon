@@ -52,5 +52,6 @@ func (s *Screen) fetchHistory() {
 }
 
 // GetCommand returns the current string in the command buffer.
-func (s *Screen) GetCommand() {
+func (s *Screen) GetCommand() string {
+	return s.command.String()
 }
